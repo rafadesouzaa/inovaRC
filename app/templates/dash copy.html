@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+
+
+<a href="/home" class="nav-link link-dark">
+    Voltar
+</a>
+
+<style>
+#barraSetor{
+    position: absolute;
+    left: 0px;
+    
+
+}
+#pizzaSetor{
+    position: absolute;
+    left: 900px;
+    
+
+}
+
+#barraNivel{
+    position: absolute;
+    left: 0px;
+    top: 600px;
+
+}
+#pizzaNivel{
+    position: absolute;
+    left: 900px;
+    top: 600px;
+
+}
+</style>
+    
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load("current", { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ["Element", "Quantidade", { role: "style" }],
+            {% for tipoSetor in tiposSetor %}
+    ['{{ tipoSetor.setor }}', {{ tipoSetor.qtd }}, "{{ tipoSetor.cor }}"],
+        {% endfor %}
+            ]);
+
+    var view = new google.visualization.DataView(data);
+    view.setColumns([0, 1,
+        {
+            calc: "stringify",
+            sourceColumn: 1,
+            type: "string",
+            role: "annotation"
+        },
+        2]);
+
+    var options = {
+        title: "Setor (Quantidade)",
+        width: 900,
+        height: 500,
+        bar: { groupWidth: "95%" },
+        legend: { position: "none" },
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById("barraSetor"));
+    chart.draw(view, options);
+        }
+</script>
+<div id="barraSetor" style="width: 500px; height: 500px;"></div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Language', 'Speakers (in millions)'],
+            {% for tipoSetor in tiposSetor %}
+    ['{{ tipoSetor.setor }}', {{ tipoSetor.qtd }}],
+        {% endfor %}
+                ]);
+
+    var options = {
+        legend: 'none',
+        pieSliceText: 'label',
+        title: 'Setor (%)',
+        pieStartAngle: 0,
+
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('pizzaSetor'));
+    chart.draw(data, options);
+            }
+</script>
+
+<body>
+    <div id="pizzaSetor" style="width: 500px; height: 500px;"></div>
+</body>
+  
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load("current", { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ["Element", "Density", { role: "style" }],
+            {% for tipoNivel in tiposNivel %}
+    ['{{ tipoNivel.nivel }}', {{ tipoNivel.qtd }}, "{{ tipoNivel.cor }}"],
+        {% endfor %}
+            ]);
+
+    var view = new google.visualization.DataView(data);
+    view.setColumns([0, 1,
+        {
+            calc: "stringify",
+            sourceColumn: 1,
+            type: "string",
+            role: "annotation"
+        },
+        2]);
+
+    var options = {
+        title: "Quantidade por Nível",
+        width: 900,
+        height: 500,
+        bar: { groupWidth: "95%" },
+        legend: { position: "none" },
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById("barraNivel"));
+    chart.draw(view, options);
+        }
+</script>
+<div id="barraNivel" style="width: 400px; height: 300px;"></div>
+<br>
+<br>
+<br>
+<br>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Language', 'Speakers (in millions)'],
+            {% for tipoNivel in tiposNivel %}
+    ['{{ tipoNivel.nivel }}', {{ tipoNivel.qtd }}],
+        {% endfor %}
+                ]);
+
+    var options = {
+        legend: 'none',
+        pieSliceText: 'label',
+        title: 'Porcentagem por Nível',
+        pieStartAngle: 0,
+
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('pizzaNivel'));
+    chart.draw(data, options);
+            }
+</script>
+
+<body>
+    <div id="pizzaNivel" style="width: 500px; height: 500px;"></div>
+</body>
+
+
+    
+</html>
